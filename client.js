@@ -69,20 +69,12 @@ script.onload = function () {
 
 
   // bind the search box instance to the map instance
-  //searchBox.bindMap(map)
+  searchBox.bindMap(map)
 
   // add the search box instance to the DOM
   document.getElementById('search-box-container').appendChild(searchBox)
 
-  searchBox.addEventListener('retrieve', (event) => {
-    console.log(result);
-    const result = event.detail.results[0];
-    if (result) {
-      // Handle the selected result, e.g., update the input field or move the map
-      document.getElementById('search-input').value = result.place_name;
-      // Additional actions with the result, like map movement
-    }
-  });
+
 }
 
 
