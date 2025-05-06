@@ -24,24 +24,25 @@
 <body>
 
   <div class="center">
-    <h1>SearchBox version</h1>
-    <div id='search-box-container'></div>
+    <h1>Geocoding API version</h1>
+    <div id="geocoding-container"></div>
     <div id="map" style="height: 500px;"></div>
-
-    <h1><a href="/geocoding">Go to Geocoding API version</a></h1>
+    <h1><a href="/">Go to SearchBox version</a></h1>
 
     <p>Pro:</p>
     <p>
-      Has a more comprehensive search.
-      Can search for locations by name (eg: if you search for BCIT, it will show up on the search suggestions)
+      Free version supports up to 100K request. <br>
+      Can search using long, lat info (eg: searching -122.994560, 49.246445 will bring to Burnaby)
     </p>
     <p>Con:</p>
     <p>
-      Free version can only support 500 session (I already used up 30-40 sessions with this testing).<br>
-      Doesn't seem to be able to work if you search using long, lat info?
+      Less comprehensive search. Can find locations based addresses, cities.
+      But is not that great at finding location based on name of place
+      (eg: if you search BCIT, you will not find the correct location)
     </p>
-  </div>
 
+  </div>
+  
 
 
 
@@ -54,7 +55,7 @@
   </mapbox-search-box>
   </div>
   <div id='map' class="center" style='width: 500px; height: 400px;'></div>-->
-  <script src="client.js"></script>
+  <script src="geocoding.js"></script> 
 </body>
 
 </html>
