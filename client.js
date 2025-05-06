@@ -31,6 +31,8 @@ function setupSearch() {
   }
 }
 
+let map;
+let searchBox;
 
 const script = document.getElementById('search-js');
 // wait for the Mapbox Search JS script to load before using it
@@ -38,7 +40,7 @@ script.onload = function () {
   const mapboxAccessToken = 'pk.eyJ1IjoiZmZsb3IiLCJhIjoiY21hN2prNHJ0MTZiZTJrb29jM3hodDRmdCJ9.VkVUw5Wb-oRpg7ngrzVXzQ';
 
   // instantiate a map
-  const map = new mapboxgl.Map({
+  map = new mapboxgl.Map({
     accessToken: mapboxAccessToken,
     container: 'map',
     center: [-74.5, 40],
@@ -49,7 +51,7 @@ script.onload = function () {
 
 
   // instantiate a search box instance
-  const searchBox = new mapboxsearch.MapboxSearchBox()
+  searchBox = new mapboxsearch.MapboxSearchBox()
 
   // set the mapbox access token, search box API options
   searchBox.accessToken = mapboxAccessToken
@@ -76,6 +78,18 @@ script.onload = function () {
 
 
 }
+
+function getLocation() {
+  document.getElementById('current').addEventListener("click", (e) => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position.coords.longitude, position.coords.latitude)
+      map.flyTo({center: [position.coords.longitude, position.coords.latitude], zoom: 12});
+    });
+    
+  })
+}
+
+getLocation();
 
 
 //setupSearch();

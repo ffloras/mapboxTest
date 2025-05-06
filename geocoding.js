@@ -31,5 +31,15 @@ script.onload = function () {
 
 }
 
+function getLocation() {
+  document.getElementById('current').addEventListener("click", (e) => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      map.flyTo({center: [position.coords.longitude, position.coords.latitude], zoom: 12});
+    });
+    
+  })
+}
+
+getLocation();
 
 
