@@ -1,35 +1,35 @@
-let userLocation = [2.3, 48.8]
+// let userLocation = [2.3, 48.8]
 
-function setupMap() {
-  mapboxgl.accessToken = 'pk.eyJ1IjoiZmZsb3IiLCJhIjoiY21hN2prNHJ0MTZiZTJrb29jM3hodDRmdCJ9.VkVUw5Wb-oRpg7ngrzVXzQ';
-  const map = new mapboxgl.Map({
-    container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/streets-v12', // style URL
-    center: userLocation, // starting position [lng, lat]
-    zoom: 9, // starting zoom
-  });
-}
+// function setupMap() {
+//   mapboxgl.accessToken = 'pk.eyJ1IjoiZmZsb3IiLCJhIjoiY21hN2prNHJ0MTZiZTJrb29jM3hodDRmdCJ9.VkVUw5Wb-oRpg7ngrzVXzQ';
+//   const map = new mapboxgl.Map({
+//     container: 'map', // container ID
+//     style: 'mapbox://styles/mapbox/streets-v12', // style URL
+//     center: userLocation, // starting position [lng, lat]
+//     zoom: 9, // starting zoom
+//   });
+// }
 
-function setupSearch() {
-  const script = document.getElementById('search-js');
-  // wait for the Mapbox Search JS script to load before using it
-  script.onload = function () {
-    // select the MapboxSearchBox instance
-    const searchBox = document.querySelector('mapbox-search-box')
+// function setupSearch() {
+//   const script = document.getElementById('search-js');
+//   // wait for the Mapbox Search JS script to load before using it
+//   script.onload = function () {
+//     // select the MapboxSearchBox instance
+//     const searchBox = document.querySelector('mapbox-search-box')
 
-    // set the options property
-    searchBox.options = {
-      language: 'es',
-      country: 'MX'
-    }
+//     // set the options property
+//     searchBox.options = {
+//       language: 'es',
+//       country: 'MX'
+//     }
 
-    // add an event listener to handle the `retrieve` event
-    searchBox.addEventListener('retrieve', (e) => {
-      const feature = e.detail;
-      console.log(feature) // geojson object representing the selected item
-    });
-  }
-}
+//     // add an event listener to handle the `retrieve` event
+//     searchBox.addEventListener('retrieve', (e) => {
+//       const feature = e.detail;
+//       console.log(feature) // geojson object representing the selected item
+//     });
+//   }
+// }
 
 let map;
 let searchBox;
@@ -48,16 +48,37 @@ script.onload = function () {
   });
 
 
+  map.on('load', () => {
+    map.addSource('wms-test-source', {
+      'type': 'raster',
+      // use the tiles option to specify a WMS tile source URL
+      // https://docs.mapbox.comhttps://docs.mapbox.com/style-spec/reference/sources/
+      'tiles': [
+        'https://geo.weather.gc.ca/geomet?&service=WMS&request=GetMap&layers=ALERTS&styles=&format=image%2Fjpeg&transparent=false&version=1.3.0&width=256&height=256&crs=EPSG%3A3857&bbox={bbox-epsg-3857}'
+      ],
+      'tileSize': 256
+    });
+    map.addLayer(
+      {
+        'id': 'geomet',
+        'type': 'raster',
+        'source': 'wms-test-source',
+        'paint': {}
+      },
+    );
+    map.setPaintProperty('geomet', 'raster-opacity', 0.5);
+  });
 
 
   // instantiate a search box instance
-  searchBox = new mapboxsearch.MapboxSearchBox()
+  //searchBox = new mapboxsearch.MapboxSearchBox()
+  searchBox = new MapboxGeocoder();
 
   // set the mapbox access token, search box API options
   searchBox.accessToken = mapboxAccessToken
-  searchBox.options = {
-    language: 'es'
-  }
+  // searchBox.options = {
+  //   language: 'es'
+  // }
 
   searchBox.addEventListener('retrieve', (e) => {
     const feature = e.detail;
@@ -76,6 +97,10 @@ script.onload = function () {
   // add the search box instance to the DOM
   document.getElementById('search-box-container').appendChild(searchBox)
 
+  const imageUrl = 'https://geo.weather.gc.ca/geomet?version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=ALERTS&format=image/png';
+
+  document.getElementById("legend").src = imageUrl;
+
 
 }
 
@@ -83,9 +108,9 @@ function getLocation() {
   document.getElementById('current').addEventListener("click", (e) => {
     navigator.geolocation.getCurrentPosition((position) => {
       console.log(position.coords.longitude, position.coords.latitude)
-      map.flyTo({center: [position.coords.longitude, position.coords.latitude], zoom: 12});
+      map.flyTo({ center: [position.coords.longitude, position.coords.latitude], zoom: 12 });
     });
-    
+
   })
 }
 

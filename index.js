@@ -18,6 +18,11 @@ app.get("/geocoding", (req, res) => {
   res.send(doc);
 });
 
+app.get("/leaflet", (req, res) => {
+  let doc = fs.readFileSync("leaflet.html", "utf8");
+  res.send(doc);
+});
+
 app.listen(port, () => {
   console.log("node app listening on port " + port);
 })
