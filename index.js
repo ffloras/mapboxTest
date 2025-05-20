@@ -28,7 +28,7 @@ function reloadWebsite() {
     });
 }
 
-setInterval(reloadWebsite, interval);
+//setInterval(reloadWebsite, interval);
 
 
 app.get("/", (req, res) => {
