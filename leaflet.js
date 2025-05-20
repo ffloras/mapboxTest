@@ -14,13 +14,13 @@ const search = new GeoSearch.GeoSearchControl({
 map.addControl(search); // Add the search control to the map
 
 let wmsLayer = L.tileLayer.wms('https://geo.weather.gc.ca/geomet?', {
-  layers: 'GDPS.ETA_FC',
+  layers: 'GDPS.ETA_RN',
   version: '1.3.0',
   opacity: 0.5,
 }).addTo(map);
 
 // Add the image as a custom control in the bottom-right corner
-const imageUrl = 'https://geo.weather.gc.ca/geomet?version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=GDPS.ETA_FC&format=image/png';
+const imageUrl = 'https://geo.weather.gc.ca/geomet?version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=GDPS.ETA_RN&format=image/png';
 
 const imageControl = L.control({ position: 'bottomright' });
 
