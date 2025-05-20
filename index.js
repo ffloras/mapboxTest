@@ -14,7 +14,7 @@ const port = 8001;
 app.use(express.static(__dirname));
 
 const url = `https://mapboxtest.onrender.com`; // Replace with your Render URL
-const interval = 60000; // Interval in milliseconds (840000 14mins)
+const interval = 840000; // Interval in milliseconds (840000 14mins)
 
 //Reloader Function
 //https://dev.to/harshgit98/solution-for-rendercom-web-services-spin-down-due-to-inactivity-2h8i
