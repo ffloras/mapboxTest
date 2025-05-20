@@ -2,7 +2,7 @@ const express = require("express");
 const mapbox = require("mapbox-gl");
 const fs = require("fs");
 const { GoogleGenAI } = require("@google/genai");
-const ai = new GoogleGenAI({apiKey: "AIzaSyCswqWb8t4NbdCrREUeTj6EP9iWgM3zfWk"});
+const ai = new GoogleGenAI({apiKey: ""});
 
 const app = express();
 
@@ -60,7 +60,7 @@ app.get("/leaflet", (req, res) => {
 app.post("/alerts", async (req, res) => {
   let { long , lat } = req.body;
   console.log("coor: " + lat + " " + long);
-  const url = `http://api.weatherapi.com/v1/alerts.json?key=c6661021a65d4ee9905184055251305&q=${lat},${long}`;
+  const url = `http://api.weatherapi.com/v1/alerts.json?key=&q=${lat},${long}`;
   try {
     const response = await fetch(url);
     const alertsJson = await response.json();
@@ -104,7 +104,7 @@ app.post("/getAdaptationTip", async (req, res) => {
 })
 
 // app.get("/alerts", async (req, res) => {
-//   let apiKey = "eee2faeb9f8922bfd9a5fad074319f2c"
+//   let apiKey = ""
 //   const url = `http://api.openweathermap.org/data/3.0/triggers?appid=${apiKey}`
 
 //   let now = new Date();
